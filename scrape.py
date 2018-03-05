@@ -8,7 +8,7 @@ from twitterscraper.main import JSONEncoder
 
 query = 'Bitcoin OR BTC'
 poolsize = 20
-limit = 2 # number of posts per day
+limit = 1000 # number of posts per day
 
 start_date = date(2017, 1, 1)
 
