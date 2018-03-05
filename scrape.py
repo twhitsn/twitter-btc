@@ -8,7 +8,7 @@ from twitterscraper.main import JSONEncoder
 
 query = 'Bitcoin OR BTC'
 poolsize = 20
-limit = 1000 # number of posts per day
+limit = 2 # number of posts per day
 
 start_date = date(2017, 1, 1)
 
@@ -42,14 +42,14 @@ for m in range(start_date.month, 13):
             limit = limit * poolsize, 
             begindate = cur_date, 
             enddate = cur_date + timedelta(days = 1)
-        )
+        )        
         
         print('Retrieved', len(tweets), 'tweets.')
         
         tweets = [{k:v for k, v in json.loads(json.dumps(tweet, cls = JSONEncoder)).items() if k != 'html'} for tweet in tweets]
         
         print('Saving csv ...')
-        if continued:
+        if continued or cur_date > start_date:
             old_df = pd.read_csv(data_file)
             all_df = pd.concat([old_df, pd.DataFrame(tweets)])
         else:
