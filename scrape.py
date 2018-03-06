@@ -1,4 +1,4 @@
-import json, calendar, csv, os.path
+import json, calendar, csv, os.path, time
 from datetime import date, timedelta, datetime
 
 import pandas as pd
@@ -10,7 +10,7 @@ query = 'Bitcoin OR BTC'
 poolsize = 20
 limit = 1000 # number of posts per day
 
-start_date = date(2017, 1, 1)
+start_date = date(2017, 9, 1)
 
 data_file = 'data.csv'
 
@@ -56,3 +56,5 @@ for m in range(start_date.month, 13):
             all_df = pd.DataFrame(tweets)
             
         all_df.to_csv(data_file, index = False)
+        
+        time.sleep(20)
