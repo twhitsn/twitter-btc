@@ -15,6 +15,8 @@ end_month = 12
 
 data_file = 'data.csv'
 
+sleep_time = 20 # seconds between requests
+
 # check if data file already exists, if so we will continue from last retrieval
 continued = os.path.isfile(data_file)
 
@@ -43,7 +45,7 @@ for m in range(start_date.month, end_month + 1):
             limit = limit * poolsize, 
             begindate = cur_date, 
             enddate = cur_date + timedelta(days = 1),
-            lang = 'English'
+            lang = 'en'
         )        
         
         print('Retrieved', len(tweets), 'tweets.')
@@ -59,4 +61,4 @@ for m in range(start_date.month, end_month + 1):
             
         all_df.to_csv(data_file, index = False)
         
-        time.sleep(20)
+        time.sleep(sleep_time)
