@@ -11,6 +11,7 @@ poolsize = 20
 limit = 1000 # number of posts per day
 
 start_date = date(2017, 9, 1)
+end_month = 12
 
 data_file = 'data.csv'
 
@@ -23,7 +24,7 @@ if(continued):
     last_date = cur_data.tail(1)['timestamp'].values[0].split('T')[0]
     start_date = datetime.strptime(last_date, '%Y-%m-%d').date() + timedelta(days = 1)
     
-for m in range(start_date.month, 13):
+for m in range(start_date.month, end_month + 1):
     # number of days in current month
     monthend = calendar.monthrange(2017, m)[1]
     
