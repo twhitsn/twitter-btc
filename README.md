@@ -8,6 +8,10 @@
 
 ## Usage
 
+Install dependencies:
+
+    pip3 install -r requirements.txt
+
 Run the scraping tool:
 
     python3 scrape.py
