@@ -41,7 +41,8 @@ for m in range(start_date.month, 13):
             poolsize = poolsize, 
             limit = limit * poolsize, 
             begindate = cur_date, 
-            enddate = cur_date + timedelta(days = 1)
+            enddate = cur_date + timedelta(days = 1),
+            lang = 'English'
         )        
         
         print('Retrieved', len(tweets), 'tweets.')
