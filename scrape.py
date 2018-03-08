@@ -6,7 +6,7 @@ import pandas as pd
 from twitterscraper import query_tweets
 from twitterscraper.main import JSONEncoder
 
-query = 'Bitcoin OR BTC'
+query = 'bitcoin'
 poolsize = 20
 limit = 1000 # number of posts per day
 
