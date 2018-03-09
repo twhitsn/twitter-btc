@@ -18,5 +18,5 @@ for i, tweet in enumerate(tweets['text']):
     else:
         polarity.append('')
     
-tweets.to_csv('data_with_sentiment.csv', index_col = False)
+tweets.to_csv('data_with_sentiment.csv', index = False)
 print(polarity)
