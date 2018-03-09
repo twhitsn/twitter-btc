@@ -12,4 +12,6 @@ columns = ['id', 'likes', 'replies', 'retweets']
 data_merged.drop(columns, inplace=True, axis=1)
 data_merged.rename(columns={'Sentiment_Polarity': 'Mean_Sentiment_Polarity'}, inplace=True)
 
+#Placeholder - To add a new column to data_merge for correlation between price change and mean sentiment polarity.
+#
 data_merged.to_csv('bitcoin_market_price_2017.csv', index=False)
