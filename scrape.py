@@ -1,11 +1,12 @@
+import os
+import platform
 import json, calendar, csv, os.path, time
 from datetime import date, timedelta, datetime
-
 import pandas as pd
-
 from twitterscraper import query_tweets
 from twitterscraper.main import JSONEncoder
 
+platform_type = platform.system()
 query = 'bitcoin'
 poolsize = 20
 limit = 1000 # number of posts per day
@@ -39,14 +40,22 @@ for m in range(start_date.month, end_month + 1):
         cur_date = date(2017, m, d)
 
         # get tweets
-        tweets = query_tweets(
-            query, 
-            poolsize = poolsize, 
-            limit = limit * poolsize, 
-            begindate = cur_date, 
-            enddate = cur_date + timedelta(days = 1),
-            lang = 'en'
-        )        
+        if platform_type == 'Linux':
+            tweets = query_tweets(
+                query, 
+                poolsize = poolsize, 
+                limit = limit * poolsize, 
+                begindate = cur_date, 
+                enddate = cur_date + timedelta(days = 1),
+                lang = 'en'
+            )   
+        elif platform_type == 'Windows':
+            enddate = cur_date + timedelta(days = 1)
+            command_str = 'twitterscraper "%s" --lang "en" -bd %s -ed %s -o temp_tweet.json -l %s'%(query,cur_date,enddate,limit)
+            os.system('%s'%(command_str))
+            with open('temp_tweet.json') as file:
+                tweets = json.load(file)
+            os.remove('temp_tweet.json')
         
         print('Retrieved', len(tweets), 'tweets.')
         
