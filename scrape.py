@@ -2,6 +2,7 @@ import os
 import platform
 import json, calendar, csv, os.path, time
 from datetime import date, timedelta, datetime
+from random import randint
 import pandas as pd
 from twitterscraper import query_tweets
 from twitterscraper.main import JSONEncoder
@@ -70,4 +71,5 @@ for m in range(start_date.month, end_month + 1):
             
         all_df.to_csv(data_file, index = False)
         
-        time.sleep(sleep_time)
+        # sleep for random interval from 1-20 seconds
+        time.sleep(randint(1, sleep_time))
