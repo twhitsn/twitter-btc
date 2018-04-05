@@ -23,7 +23,7 @@ daily = daily.merge(btc, how = 'inner', on = 'date')
 lags = 2
 
 for i in range(1, lags + 1): 
-    daily['close-{}'.format(i)] = daily['close'].shift(i).values
+    daily['polarity-{}'.format(i)] = daily['polarity'].shift(i).values
 
 print('Computing correlation matrix ...') 
 print(daily.corr())
