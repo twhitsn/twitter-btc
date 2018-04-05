@@ -1,22 +1,23 @@
 import pandas as pd
 from textblob import TextBlob
 
-tweets = pd.read_csv('data.csv')
-tweets['Sentiment_Polarity'] = 'NA'
+for i in range(1, 4):
+    tweets = pd.read_csv('data/tweets{}.csv'.format(i))
 
-polarity = []
-
-print('Computing sentiment ...')
-
-for i, tweet in enumerate(tweets['text']):
-    print('{}%'.format(round(i / len(tweets) * 100)), end = '\r')    
+    print('Computing sentiment for dataset {}...'.format(i))
     
-    if type(tweet) is str:
-        blob = TextBlob(tweet)
-        polarity.append(blob.sentiment.polarity)
-        tweets.ix[i, 'Sentiment_Polarity'] = blob.sentiment.polarity
-    else:
-        polarity.append('')
-    
-tweets.to_csv('data_with_sentiment.csv', index = False)
-print(polarity)
+    polarity = []
+
+    for j, tweet in enumerate(tweets['text']):
+        print('{}%'.format(round(j / len(tweets) * 100)), end = '\r')    
+        
+        if type(tweet) is str:
+            blob = TextBlob(tweet)
+            polarity.append(blob.sentiment.polarity)
+        else:
+            polarity.append('NA')
+            
+    sentiment = pd.DataFrame({'timestamp': tweets['timestamp'], 'polarity': polarity})
+        
+    print('Saving data/sentiment{}.csv'.format(i))
+    sentiment.to_csv('data/sentiment{}.csv'.format(i), index = False)
