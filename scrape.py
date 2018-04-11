@@ -4,8 +4,17 @@ import json, calendar, csv, os.path, time
 from datetime import date, timedelta, datetime
 from random import randint
 import pandas as pd
-from twitterscraper import query_tweets
+import twitterscraper.query
+#from twitterscraper import query_tweets
 from twitterscraper.main import JSONEncoder
+
+# modify twitterscraper url
+#   remove f=tweets, which sorts by newest
+#   this will sort by top
+twitterscraper.query.INIT_URL = "https://twitter.com/search?vertical=default&q={q}&l={lang}"
+twitterscraper.query.RELOAD_URL = "https://twitter.com/i/search/timeline?vertical=" \
+    "default&include_available_features=1&include_entities=1&" \
+    "reset_error_state=false&src=typd&max_position={pos}&q={q}&l={lang}"
 
 platform_type = platform.system()
 query = 'bitcoin'
@@ -15,7 +24,7 @@ limit = 1000 # number of posts per day
 start_date = date(2017, 9, 1)
 end_month = 12
 
-data_file = 'data.csv'
+data_file = 'tweets.csv'
 
 sleep_time = 20 # seconds between requests
 
@@ -42,7 +51,7 @@ for m in range(start_date.month, end_month + 1):
 
         # get tweets
         if platform_type == 'Linux':
-            tweets = query_tweets(
+            tweets = twitterscraper.query.query_tweets(
                 query, 
                 poolsize = poolsize, 
                 limit = limit * poolsize, 
@@ -52,7 +61,7 @@ for m in range(start_date.month, end_month + 1):
             )   
         elif platform_type == 'Windows':
             enddate = cur_date + timedelta(days = 1)
-            command_str = 'twitterscraper "%s" --lang "en" -bd %s -ed %s -o temp_tweet.json -l %s'%(query,cur_date,enddate,limit)
+            command_str = 'twitterscraper "%s" --lang "en" -bd %s -ed %s -o temp_tweet.json -l %s'%(query, cur_date, enddate, limit)
             os.system('%s'%(command_str))
             with open('temp_tweet.json') as file:
                 tweets = json.load(file)
