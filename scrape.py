@@ -24,7 +24,7 @@ limit = 1000 # number of posts per day
 start_date = date(2017, 9, 1)
 end_month = 12
 
-data_file = 'tweets.csv'
+data_file = 'tweets3.csv'
 
 sleep_time = 20 # seconds between requests
 

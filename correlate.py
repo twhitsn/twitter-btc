@@ -19,6 +19,10 @@ print('Grouping sentiment dataset by day ...')
 daily = sentiment.groupby('date', as_index = False)['polarity'].mean()
 daily = daily.merge(btc, how = 'inner', on = 'date')
 
+daily['polarity_diff'] = daily['polarity'].diff(1)
+daily['polarity_bin'] = daily['polarity_diff'].apply(lambda x: 1 if x >= 0 else 0)
+daily['change_bin'] = daily['change'].apply(lambda x: 1 if x >= 0 else 0)
+
 # add lags
 lags = 2
 
