@@ -1,3 +1,5 @@
+##Redundant code
+##Initial model
 import pandas as pd
 
 tweets = pd.read_csv('data_with_sentiment.csv')
