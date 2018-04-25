@@ -21,10 +21,10 @@ query = 'bitcoin'
 poolsize = 20
 limit = 1000 # number of posts per day
 
-start_date = date(2017, 9, 1)
-end_month = 12
+start_date = date(2017, 1, 1)
+end_month = 4
 
-data_file = 'tweets3.csv'
+data_file = 'tweets2.csv'
 
 sleep_time = 20 # seconds between requests
 

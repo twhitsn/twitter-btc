@@ -15,9 +15,12 @@ for i in range(1, 4):
     
     # remove stop words
     print('Removing stop words and punctuation...')
+    
+    # cache stop words
     sw = stopwords.words('english')
     tweets['text'] = tweets['text'].apply(lambda t: ' '.join([word for word in t.split() if word not in sw]))
     
+    # remove punctuation/non-ASCII characters
     tweets['text'] = tweets['text'].str.replace('[^\w\s]', '')
 
     print('Computing sentiment ...')
@@ -29,8 +32,6 @@ for i in range(1, 4):
         
         blob = TextBlob(tweet)
         polarity.append(blob.sentiment.polarity)
-        
-        #print(tweet, blob.sentiment.polarity, blob.sentiment.subjectivity)
             
     sentiment = pd.DataFrame({'timestamp': tweets['timestamp'], 'polarity': polarity})
         

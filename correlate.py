@@ -16,20 +16,33 @@ for i in range(1, 4):
 print('Grouping sentiment dataset by day ...')
 
 # get daily mean polarity
-daily = sentiment.groupby('date', as_index = False)['polarity'].mean()
+day_group = sentiment.groupby('date')
+
+daily = pd.DataFrame(columns = ['polarity_mean', 'perc_positive'], dtype = 'float64')
+daily['date'] = sentiment['date'].unique()
+
+for date, group in day_group:
+    polarity_mean = group['polarity'].mean()
+    perc_positive = group['polarity'].apply(lambda x: 1 if x > 0 else 0).sum() / len(group)
+    
+    daily.loc[daily.date == date, 'polarity_mean'] = polarity_mean
+    daily.loc[daily.date == date, 'perc_positive'] = perc_positive
+
 daily = daily.merge(btc, how = 'inner', on = 'date')
 
-daily['polarity_diff'] = daily['polarity'].diff(1)
+daily['polarity_diff'] = daily['polarity_mean'].diff(1)
 daily['polarity_bin'] = daily['polarity_diff'].apply(lambda x: 1 if x >= 0 else 0)
-daily['change_bin'] = daily['change'].apply(lambda x: 1 if x >= 0 else 0)
+daily['change_bin'] = daily['change'].apply(lambda x: 1 if x > 0 else 0)
 
 # add lags
-lags = 2
+print('Adding lag features ...')
 
-for i in range(1, lags + 1): 
-    daily['polarity-{}'.format(i)] = daily['polarity'].shift(i).values
+fields = ['polarity_mean', 'polarity_bin', 'perc_positive']
+lags = 1
 
-print('Computing correlation matrix ...') 
+for field in fields:
+    for i in range(1, lags + 1): 
+        daily[field + '-{}'.format(i)] = daily[field].shift(i).values
+
+print('Computing correlation matrix ...')
 print(daily.corr())
-
-
