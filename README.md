@@ -1,5 +1,7 @@
 # Twitter Sentiment and BTC Price
 
+Jupyter Notebook [here](https://github.com/whitstd/twitter-btc/blob/master/notebook.ipynb)
+
 ## Authors
 
 - Tim Whitson @whitstd
@@ -18,4 +20,4 @@ Run the scraping tool:
     
 The tool will scrape Tweets by day (default 1000 per day). Each day is appended and saved to the csv file (default "data.csv"). Therefore, you can stop at any time and begin where you last left off.
 
-**Use ctrl+z if exiting/pausing program while extracting. DO NOT use ctrl+c. If so, you will lose all progress. You should probably make a backup of the file before stopping/starting the script.**
+If using Ubuntu: **Use ctrl+z if exiting/pausing program while extracting. DO NOT use ctrl+c. If so, you will lose all progress. You should probably make a backup of the file before stopping/starting the script.**
